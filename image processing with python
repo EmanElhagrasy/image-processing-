@@ -1,2 +1,33 @@
 
 # 3-Image restoration, Noise, Segmentation and Contours
+
+##-2-Noise:
+How can an image have noise? Well images are signals and real-world signals usually contain departures from the ideal signal, which is the perfect image, as we observe with our eyes in real life. Such departures are referred to as noise.More specifically, noise is the result of errors in the image acquisition process that result in pixel values that do not reflect the true intensities of the real scene.
+
+  --------------------------------
+-Apply noise in scikit-image:
+  >>from skimage.util import random_noise
+  >>noisy_image = random_noise(image)
+  -------------------------------
+  By using the random_noise function, we obtain the original image with a lot of added noise, that is distributed randomly. This type of noise is known as "salt and pepper" because that's in fact what it looks like.
+  
+-Reducing noise:
+Most of the times we will want to remove or reduce the noise of images instead of adding it in.For that, we can use several algorithms in scikit-image.
+"The higher the resolution of the image, the longer it may take to eliminate the noise"
+
+Some types of denoising algorithms are: 
+ 1- The total variation filter(TV): This filter tries to minimize the total variation of the image. It tends to produce “cartoon-like” images, that is, piecewise-constant images
+ 2- Bilateral filtering: smooths images while preserving edges. It replaces the intensity of each pixel with a weighted average of intensity values from nearby pixels.
+ 3- The wavelet denoising filter 
+ 4- Non-local means denoising.
+ ----------------------------------------
+Apply total variation filter(TV) in scikit-image:
+>>from skimage.restoration import denoise_tv_chambolle
+>>denoised_image = denoise_tv_chambolle(noisy_image, weight =.1 , multichannel = True)
+# we can optionally set the denoising weight. The greater the weight, the more denoising but it could also make the image smoother.
+------------------------------------------
+Apply Bilateral filter denoising  in scikit-image:
+>>from skimage.restoration import denoise_bilateral
+>>denoised_image = denoise_bilateral(noisy_image, multichannel = True)
+#The resulting image is less smooth than the one from the total variation filter. And preserves the edges a lot more.
+-------------------------------------------
