@@ -209,7 +209,41 @@ Harris Corner Detector: is a corner detection operator that is widely used in co
 #the coordinates of the peaks of the possible corners
 >>
 >>
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#3-Face detection:
+ 
+ Several social networks platforms and smart-phones are using face detection to know if there is someone in a picture and if so, apply filters,
+ add focus in the face area, or recommend you to tag friends. You can even automatically blur faces for privacy protection. 
+ Face detection can be useful in other cases as well. Human faces are able to convey many different emotions such as happiness, sadness and many others.
+ That's why face detection is the key first step before recognizing emotions.
 
+Detecting faces with scikit-image: With scikit-image, we can detect faces using a machine learning classifier, 
+                                   with just a couple of lines! In this course, we won't cover machine learning concepts in depth,
+                                   but it's important to know that we use a cascade of classifiers, which is like multiple classifiers in one. 
+                                   You can also use it for other things, like cats, objects, or profile faces, from a side view.
+  
+---------------------------------------------------------
+-Apply detector
+>>from skimage.feature import Cascade
+>>trained_file = data.lbp_frontal_face_cascade_filename()
+>>detector = cascade(trained_file)
+--------------------------------------------------------
 
-
-
+Detecting faces: To apply the detector on images, we need to use the detect_multi_scale method, from the same cascade class.
+                 This method searches for the object, in this case a face. It creates a window that will be moving through the image until
+                 it finds something similar to a human face.Searching happens on multiple scales. The window will have a minimum size, to spot the small or far-away faces.
+                 And a maximum size to also find the larger faces in the image.
+                 
+---------------------------------------------------------
+>>detected = detecor.detect_multi_scale(img = image , scale_factor = 1, scale_ratio = 1.2, min_size =(10,10), max_size =(200,200))
+>>print(detected)
+#detected_face :[{'r' = 115 , 'c'= 210, width = 167 , height = 167}]
+#So this method takes the input image as the first parameter, a scale factor, by which the searching window is multiplied in each step, a step ratio,
+in which 1 represents an exhaustive search and usually is slow. By setting this parameter to higher
+ values the results will be worse but the computation will be much faster. Usually, values in the interval 1 to 1.5 give good results. 
+ Then the minimum and maximum window size are defined. These specify the interval for the search windows that are applied to the input image to detect the faces.
+ The detector will return the coordinates of the box that contains the face. When printing the result, we see that it's a dictionary,
+ where r represents the row position of the top left corner of the detected window, c is the column position pixel, width is width of detected window,
+ and height, the height of the detected window.
+ ----------------------------------------------------------
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------
