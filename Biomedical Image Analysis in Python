@@ -1,0 +1,48 @@
+1-Exploration👇
+
+
+#1-Image data
+
+We can read in images using the 🎈ImageIO package. Its🎈 imread() function will take a single file and load it as an image object.
+One useful feature of ImageIO is that it can read DICOM files, the standard format for human medical imaging. The data is read in as an image object,
+which is a type of NumPy array.
+
+♦ Meta data: images are always acquired in a specific context. This information is often referred to as metadata. ImageIO loads available metadata into a dictionary, 
+              accessible through the 🎈meta attribute. This is especially important for DICOM files, which contain a lot of patient and acquisition information.
+              Since meta is a Python dictionary, you can access specific information by indexing it with one of the available keys. This file, for example, 
+               includes a modality field. You can also call the keys method to list all of the available metadata.
+               
+               🌹Metadata can be quite rich in medical images and can include:
+                        Patient demographics: name, age, sex, clinical information
+                        Acquisition information: image shape, sampling rates, data type, modality (such as X-Ray, CT or MRI)
+
+♦ we'll rely heavily on matplotlib and its 🎈imshow() function throughout this course. To draw a simple plot of a 2D image, 
+  first, import the PyPlot module from matplotlib. Next, call🎈pyplot dot imshow() and pass in the 2D image. If the image does not have color, 
+  add "cmap equals gray" to plot it in grayscale. Next, to reduce clutter, it's common to turn off the axis ticks, labels, and frame with pyplot dot axis off
+  Finally, call show() to render the image.
+   
+   -------------------------------------------------------------- Reading image and meta data code-----------------------------------------------------------------------
+# Import ImageIO and load image
+>>import imageio
+>>im = imageio.imread("chest-220.dcm")
+# Print the available metadata fields
+>>print(im.meta.keys())
+#searching for a value of key in the meta data
+>>im.meta['PatientSex']
+-----------------------------------------------------------------Matplotlib-----------------------------------------------------------------------------------------
+# Import ImageIO and PyPlot 
+>>import imageio
+>>import matplotlib.pyplot as plt
+# Read in "chest-220.dcm"
+>>im = imageio.imread("chest-220.dcm")
+# Draw the image with greater contrast
+plt.imshow(im, cmap='gray',vmin=-200 , vmax=200)
+# Remove axis ticks and labels
+plt.axis('off')
+
+#Matplotlib's imshow() function gives you a simple way to do this. Knowing a few simple arguments will help:
+🎈cmap controls the color mappings for each value. The "gray" colormap is common, but many others are available.
+🎈vmin and vmax control the color contrast between values. Changing these can reduce the influence of extreme values.
+🎈plt.axis('off') removes axis and tick labels from the image.
+# Render the image
+plt.show()
